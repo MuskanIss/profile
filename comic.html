@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comics</title>
+    <style>
+      #comicList {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        padding: 5%;
+        grid-gap: 20px;
+        text-align: center;
+      }
+      /* img {
+        width: 100%;
+        height: 40%;
+      } */
+      @media screen and (max-width: 500px) {
+        #comicList {
+          grid-template-columns: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="comicList"></div>
+    <script>
+      fetch("https://reqres.in/api/users")
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (list) {
+          printList(list);
+        })
+        .catch((err) => console.log(err));
+      function printList(list) {
+        var comicList = document.querySelector("#comicList");
+        for (var i = 0; i < list.data.length; i++) {
+          var item = document.createElement("div");
+          var avatar = document.createElement("img");
+          var name = document.createElement("h4");
+          var email = document.createElement("p");
+          comicList.appendChild(item);
+          item.append(avatar, name, email);
+          avatar.src = list.data[i].avatar;
+          avatar.style.textAlign = "center";
+          avatar.style.marginLeft = "auto";
+          console.log(list.data[i]);
+          name.textContent =
+            list.data[i].first_name + " " + list.data[i].last_name;
+          email.textContent = list.data[i].email;
+        }
+      }
+    </script>
+  </body>
+</html>
